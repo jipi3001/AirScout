@@ -5,6 +5,7 @@ import sys
 # importieren derv Fähigkeit für den Zugriff auf externer Dateien.
 sys.path.append('lib/')
 
+
 import os
 # importieren für Feedback in der Konsole.
 import logging
@@ -28,7 +29,6 @@ logging.info("init and Clear")
 epd.init()
 # wartet eine Sekunde.
 time.sleep(1)
-
 
 ## Gibt output in der Konsole
 #logging.info("1.Das Bild wird gezeichnet...")
@@ -80,7 +80,7 @@ def Display1(PM1_0, PM2_5, PM10, CO2, CO, O3, NO2, Temperature, Humidity, AQI_NO
     epd.display(epd.getbuffer(blackimage),epd.getbuffer(redimage))
 
     # Danach soll 1 Sekunde nicht passieren.
-    time.sleep(10)
+    time.sleep(4)
     
 def Display2(PM1_0, PM2_5, PM10, CO2, CO, O3, NO2, Temperature, Humidity, AQI_NO2, AQI_PM2_5, AQI_PM10, AQI_O3, Time):
     blackimage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
@@ -98,7 +98,7 @@ def Display2(PM1_0, PM2_5, PM10, CO2, CO, O3, NO2, Temperature, Humidity, AQI_NO
     
     epd.display(epd.getbuffer(blackimage),epd.getbuffer(redimage))
 
-    time.sleep(10)
+    time.sleep(4)
 
 
 def Anzeigen(PM1_0, PM2_5, PM10, CO2, CO, O3, NO2, Temperature, Humidity, AQI_NO2, AQI_PM2_5, AQI_PM10, AQI_O3, Time):

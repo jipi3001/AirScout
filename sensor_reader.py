@@ -26,20 +26,17 @@ def read_sensor_data():
                 co = (response[17] * 256 + response[18]) * 0.1
                 o3 = (response[19] * 256 + response[20]) * 0.01
                 no2 = (response[21] * 256 + response[22]) * 0.01
-
                 return {
-                    "Timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "PM1.0": pm_1_0,
-                    "PM2.5": pm_2_5,
-                    "PM10": pm_10,
-                    "CO2": co2,
-                    "VOC": voc,
-                    "Temperature": temperature,
-                    "Humidity": humidity,
-                    "CH2O": ch2o,
-                    "CO": co,
-                    "O3": o3,
-                    "NO2": no2
+                    "measured_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "part_1": pm_1_0,
+                    "part_2_5": pm_2_5,
+                    "part_10": pm_10,
+                    "co2": co2,
+                    "temp": temperature,
+                    "hum": humidity,
+                    "ch2o": ch2o,
+                    "co": co,
+                    "o3": o3
                 }
             else:
                 print("Invalid response (checksum error)!")
@@ -47,29 +44,29 @@ def read_sensor_data():
             print("Invalid response (wrong command)!")
             time.sleep(5)
     else:
-        print("No valid response received!")
+        print("No valid response <3 received!")
         time.sleep(2)
 
 # Functions to get sensor values
 def get_pm_1_0():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("PM1.0")
+        return sensor_data.get("part_1")
 
 def get_pm_2_5():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("PM2.5")
+        return sensor_data.get("part_2_5")
 
 def get_pm_10():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("PM10")
+        return sensor_data.get("part_10")
 
 def get_co2():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("CO2")
+        return sensor_data.get("co2")
 
 def get_voc():
     sensor_data = read_sensor_data()
@@ -79,30 +76,30 @@ def get_voc():
 def get_temperature():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("Temperature")
+        return sensor_data.get("temp")
 
 def get_humidity():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("Humidity")
+        return sensor_data.get("hum")
 
 def get_ch2o():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("CH2O")
+        return sensor_data.get("ch2o")
 
 def get_co():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("CO")
+        return sensor_data.get("co")
 
 def get_o3():
     sensor_data = read_sensor_data()
     if sensor_data:
-        return sensor_data.get("O3")
+        return sensor_data.get("o3")
 
 def get_no2():
     sensor_data = read_sensor_data()
     if sensor_data:
         return sensor_data.get("NO2")
-
+    
