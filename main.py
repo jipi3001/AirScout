@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/AirScout-main/lib/')
+sys.path.append('/home/airscout/AirScout-main/lib/')
 import os
 import json
 import logging
@@ -14,7 +14,7 @@ import urequests
 import queue
 import gps_readerV2
 
-os.chdir("/home/AirScout-main")
+os.chdir("/home/airscout/AirScout-main")
 
 
 #maximum amount of files than can be stored on the device locally
@@ -34,7 +34,7 @@ FIXED_LONG = 9.008371
 FIXED_LAT = 48.702709
 
 # Messdaten Speicherort
-DATEN_PFAD = '/home/AirScout-main/messdaten/'
+DATEN_PFAD = '/home/airscout/messdaten/'
 if not os.path.exists(DATEN_PFAD):		#creates folder if doesnt exist yet
     os.makedirs(DATEN_PFAD)
 
@@ -50,7 +50,7 @@ GPIO.setup(SEND_SWITCH, GPIO.IN)
 # Display Initialisierung
 epd = epd1in54b_V2.EPD()
 epd.init()
-font = ImageFont.truetype("/home/AirScout-main/Font.ttc", 24)
+font = ImageFont.truetype("/home/airscout/AirScout-main/Font.ttc", 24)
 
 q = queue.Queue(maxsize=1)		#only one measurement of the sensors can be stored in the queue at once
 
@@ -85,7 +85,8 @@ def display():
             else:
                 drawblack.text((0, 0), f'Long: {data_read.get("long", "NaN")}', font=font, fill=0)
                 drawblack.text((0, 22), f'Lat: {data_read.get("lat", "NaN")}', font=font, fill=0)
-                drawblack.text((0, 44), f'Saved Meas: {sum(1 for f in os.listdir(DATEN_PFAD) if f.endswith(".json"))}', font=font, fill=0)
+                drawblack.text((0, 44), f'Sats: {data_read.get("num_sats", "NaN")}', font=font, fill=0)
+                drawblack.text((0, 66), f'Saved Meas: {sum(1 for f in os.listdir(DATEN_PFAD) if f.endswith(".json"))}', font=font, fill=0)
             epd.display(epd.getbuffer(blackimage), epd.getbuffer(redimage))
         
         if DISPLAY_NOW != DISPLAY_LAST:
@@ -102,7 +103,8 @@ def display():
             else:
                 drawblack.text((0, 0), f'Long: {data_read.get("long", "NaN")}', font=font, fill=0)
                 drawblack.text((0, 22), f'Lat: {data_read.get("lat", "NaN")}', font=font, fill=0)
-                drawblack.text((0, 44), f'Saved Meas: {sum(1 for f in os.listdir(DATEN_PFAD) if f.endswith(".json"))}', font=font, fill=0)
+                drawblack.text((0, 44), f'Sats: {data_read.get("num_sats", "NaN")}', font=font, fill=0)
+                drawblack.text((0, 66), f'Saved Meas: {sum(1 for f in os.listdir(DATEN_PFAD) if f.endswith(".json"))}', font=font, fill=0)
             epd.display(epd.getbuffer(blackimage), epd.getbuffer(redimage))
         DISPLAY_LAST = DISPLAY_NOW
         time.sleep(DISPLAY_DELAY)
@@ -111,7 +113,6 @@ def messen():
     """ Misst Sensordaten und speichert sie lokal. """
     while not stop_event.is_set():
         sensor_data = read_sensor_data()
-        #print(GPIO.input(GPS_SWITCH)) #remove # when wanting to see exact gps information
         if GPIO.input(GPS_SWITCH) == 0:
             data = {
                 "long": FIXED_LONG,

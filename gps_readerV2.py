@@ -18,7 +18,8 @@ def parseResponse(gpsLine):
             if isinstance(msg, pynmea2.types.talker.GGA) and msg.is_valid:
                 return {
                     "latitude": msg.latitude,
-                    "longitude": msg.longitude
+                    "longitude": msg.longitude,
+                    "num_sats": msg.num_sats
                 }
         except pynmea2.ParseError:
             return None
